@@ -1,8 +1,11 @@
 package de.hiorcraft.nex.nexWarzone
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
+import de.hiorcraft.nex.nexWarzone.listener.PlayerAdvancementListener
 import de.hiorcraft.nex.nexWarzone.util.CommandManager
 import de.hiorcraft.nex.nexWarzone.listener.PlayerDeath
+import de.hiorcraft.nex.nexWarzone.listener.WhitelistListener
+import de.hiorcraft.nex.nexWarzone.util.BorderDistanceTask
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -16,7 +19,10 @@ class PaperMain : SuspendingJavaPlugin() {
         val manager = server.pluginManager
 
         manager.registerEvents(PlayerDeath(), this)
+        manager.registerEvents(WhitelistListener(), this)
+        manager.registerEvents(PlayerAdvancementListener(), this)
 
+        BorderDistanceTask().runTaskTimer(plugin, 0L, 20L)
         CommandManager.registerAll()
 
         logger.info("nex-Warzone has started.")

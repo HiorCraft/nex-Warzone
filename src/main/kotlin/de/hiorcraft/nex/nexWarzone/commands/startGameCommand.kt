@@ -13,7 +13,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.scheduler.BukkitRunnable
 
-const val  gameStarted = false
+var gameStarted = false
 
 fun startGameCommand() = commandTree("gamestart") {
     withPermission(PermissionRegistry.COMMNAD_GAME_START)
@@ -43,7 +43,7 @@ fun startGameCommand() = commandTree("gamestart") {
                     info("PvP und Mob-Spawning sind nun aktiviert!")
                 }
             }
-        }.runTaskLater(plugin, 30 * 60 * 20L)
+        }.runTaskLater(plugin, 10 * 20L)
 
 
         object : BukkitRunnable() {
@@ -63,7 +63,7 @@ fun startGameCommand() = commandTree("gamestart") {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 30 * 60 * 20L, 20 * 60 * 20L)
+        }.runTaskTimer(plugin, 10 * 20L, 20 * 60 * 20L)
     }
 
     plugin.server.pluginManager.registerEvents(GameMoveListener(), plugin)
