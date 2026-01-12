@@ -21,8 +21,8 @@ class PlayerDeath() : Listener {
 
         player.getWorld().playSound(
             player.getLocation(),
-            Sound.ENTITY_WITHER_DEATH,
-            0.2f,
+            Sound.ENTITY_WITHER_SPAWN,
+            0.3f,
             1.0f
         )
 

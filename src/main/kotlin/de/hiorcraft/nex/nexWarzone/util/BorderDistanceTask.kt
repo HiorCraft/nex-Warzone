@@ -6,10 +6,12 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.scheduler.BukkitRunnable
 
+
 class BorderDistanceTask() : BukkitRunnable() {
 
     override fun run() {
-        if (!gameStarted) return
+
+        if(!gameStarted) return
 
         val world = plugin.server.getWorld("world") ?: return
         val border = world.worldBorder
@@ -18,14 +20,15 @@ class BorderDistanceTask() : BukkitRunnable() {
         val radius = border.size / 2.0
 
         for (player in world.players) {
+
             val dx = kotlin.math.abs(player.location.x - center.x)
             val dz = kotlin.math.abs(player.location.z - center.z)
 
             val distanceToBorder = radius - maxOf(dx, dz)
 
             val color = when {
-                distanceToBorder < 20 -> NamedTextColor.RED
-                distanceToBorder < 50 -> NamedTextColor.YELLOW
+                distanceToBorder < 250 -> NamedTextColor.RED
+                distanceToBorder < 450 -> NamedTextColor.YELLOW
                 else -> NamedTextColor.GREEN
             }
 
@@ -33,7 +36,6 @@ class BorderDistanceTask() : BukkitRunnable() {
                 "Border: ${distanceToBorder.toInt()} Blöcke entfernt",
                 color
             )
-
             player.sendActionBar(message)
         }
     }
