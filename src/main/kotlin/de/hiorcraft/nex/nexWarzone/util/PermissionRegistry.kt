@@ -7,5 +7,6 @@ object PermissionRegistry {
 
     const val COMMNAD_GAME_START = "$COMMAND_PREFIX.gamestart"
     const val COMMAND_WHITLISTALL = "$COMMAND_PREFIX.whitelistall"
+    const val COMMAND_EVENT_START = "$COMMAND_PREFIX.eventstart"
 
 }

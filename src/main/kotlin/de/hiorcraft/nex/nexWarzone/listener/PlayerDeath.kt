@@ -21,7 +21,7 @@ class PlayerDeath() : Listener {
 
         player.getWorld().playSound(
             player.getLocation(),
-            Sound.ENTITY_WITHER_SPAWN,
+            Sound.BLOCK_BEACON_DEACTIVATE,
             0.3f,
             1.0f
         )
