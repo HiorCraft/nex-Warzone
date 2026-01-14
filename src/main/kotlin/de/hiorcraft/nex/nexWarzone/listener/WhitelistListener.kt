@@ -15,8 +15,7 @@ class WhitelistListener : Listener {
 
         if (!player.isWhitelisted) {
             val reason = Component.text()
-                .append(Component.text("⚠ Event noch nicht gestartet\n", NamedTextColor.RED))
-                .append(Component.text("Bitte warte, bis das Team das Event öffnet.", NamedTextColor.AQUA))
+                .append(Component.text("! Du bist nicht gewhitelisted !\n", NamedTextColor.RED))
                 .build()
 
             event.disallow(

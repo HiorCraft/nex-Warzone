@@ -24,7 +24,7 @@ fun startGameCommand() = commandTree("gamestart") {
         val border = world.worldBorder
         gameStarted = true
 
-        world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
+        world.setGameRule(GameRule.SPAWN_MONSTERS, false)
         world.setGameRule(GameRule.PVP, false)
         world.setGameRule(GameRule.FALL_DAMAGE, false)
 
