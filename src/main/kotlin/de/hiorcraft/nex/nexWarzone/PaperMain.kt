@@ -26,6 +26,8 @@ class PaperMain : SuspendingJavaPlugin() {
         manager.registerEvents(GameMoveListener(), this)
         manager.registerEvents(EventListener(), this)
 
+        logger.info("Enabled Listeners.")
+
         BorderDistanceTask().runTaskTimer(plugin, 0L, 20L)
         CommandManager.registerAll()
 
@@ -36,6 +38,8 @@ class PaperMain : SuspendingJavaPlugin() {
         world?.setGameRule(GameRule.PVP, false)
         world?.setGameRule(GameRule.DO_WARDEN_SPAWNING, false)
         world?.setGameRule(GameRule.LOCATOR_BAR, false)
+
+        logger.info("Set GameRules for Event.")
 
         logger.info("nex-Warzone has started.")
     }
