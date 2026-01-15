@@ -5,14 +5,18 @@ import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 
-var EventStart = false
+object EventStart {
+    var isStarted: Boolean = false
+}
 
 fun startEventCommand() = commandTree("EventStart") {
 
     withPermission(PermissionRegistry.COMMAND_EVENT_START)
     playerExecutor { player, args ->
 
-        EventStart = true
+
+        EventStart.isStarted = true
+
 
         player.sendText {
             appendPrefix()
