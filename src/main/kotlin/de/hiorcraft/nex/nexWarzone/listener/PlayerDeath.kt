@@ -1,6 +1,7 @@
 package de.hiorcraft.nex.nexWarzone.listener
 
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
+import dev.slne.surf.surfapi.bukkit.api.util.forEachPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.BanList
@@ -19,12 +20,14 @@ class PlayerDeath() : Listener {
         val player = event.entity
         event.deathMessage(null)
 
-        player.getWorld().playSound(
-            player.getLocation(),
-            Sound.BLOCK_BEACON_DEACTIVATE,
-            0.3f,
-            1.0f
-        )
+        forEachPlayer { player ->
+            player.playSound(
+                player.location,
+                Sound.BLOCK_BEACON_DEACTIVATE,
+                1.0f,
+                1.0f
+            )
+        }
 
         val banList = Bukkit.getBanList(BanList.Type.PROFILE) as ProfileBanList
         banList.addBan(
