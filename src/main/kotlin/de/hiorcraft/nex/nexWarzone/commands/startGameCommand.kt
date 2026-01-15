@@ -24,7 +24,8 @@ fun startGameCommand() = commandTree("gamestart") {
         val border = world.worldBorder
         gameStarted = true
 
-        world.setGameRule(GameRule.SPAWN_MONSTERS, false)
+        // 30 Minuten Safe-Phase
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
         world.setGameRule(GameRule.PVP, false)
         world.setGameRule(GameRule.FALL_DAMAGE, false)
 
@@ -32,7 +33,7 @@ fun startGameCommand() = commandTree("gamestart") {
         border.size = 5000.0
         server.sendText {
             appendPrefix()
-            info("Spiel gestartet! 30 Sekunden Safe-Phase ohne PvP und Mob-Spawning.")
+            info("Spiel gestartet! 30 Minuten Safe-Phase ohne PvP und Monster-Spawning.")
         }
 
         world.players.forEach {
@@ -46,7 +47,7 @@ fun startGameCommand() = commandTree("gamestart") {
             it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
         }
 
-
+        // Nach 30 Minuten PvP und Mob\-Spawning wieder aktivieren und Border-Shrink starten
         object : BukkitRunnable() {
             override fun run() {
 
@@ -55,17 +56,16 @@ fun startGameCommand() = commandTree("gamestart") {
 
                 server.sendText {
                     appendPrefix()
-                    info("PvP und Mob-Spawning sind nun aktiviert!")
+                    info("PvP und Monster-Spawning sind nun aktiviert!")
                 }
 
                 world.players.forEach {
-                    it.playSound(it.location, Sound.BLOCK_BEACON_DEACTIVATE, 1f, 1f)
+                    it.playSound(it.location, Sound.BLOCK_BELL_USE, 1f, 1f)
                 }
-
 
                 startBorderShrink(world)
             }
-        }.runTaskLater(plugin, 30 * 20L)
+        }.runTaskLater(plugin, 30 * 60 * 20L) // 30 Minuten
     }
 }
 
@@ -73,7 +73,7 @@ fun startBorderShrink(world: World) {
 
     val border = world.worldBorder
 
-    val minSize = 20.0
+    val minSize = 10.0
     var shrink1000Count = 4
     val shrink1000Amount = 1000.0
     val shrink250Amount = 250.0
@@ -99,8 +99,6 @@ fun startBorderShrink(world: World) {
                         it.playSound(it.location, Sound.BLOCK_NOTE_BLOCK_PLING, 0.5f, 1f)
                     }
                 }
-
-
                 else -> {
                     border.setSize(newSize, 5 * 60)
 
@@ -130,7 +128,7 @@ fun startBorderShrink(world: World) {
 
     }.runTaskTimer(
         plugin,
-        1 * 60 * 20L,
-        1 * 60 * 20L
+        10 * 60 * 20L, // erste Ausführung nach 10 Minuten
+        10 * 60 * 20L  // Wiederholung alle 10 Minuten
     )
 }
