@@ -5,12 +5,15 @@ import de.hiorcraft.nex.nexWarzone.plugin
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
+import dev.slne.surf.surfapi.bukkit.api.util.forEachPlayer
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import dev.slne.surf.surfapi.core.api.messages.adventure.showTitle
 import org.bukkit.Bukkit
 import org.bukkit.GameRule
 import org.bukkit.Sound
 import org.bukkit.World
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 
 var gameStarted = false
@@ -24,16 +27,22 @@ fun startGameCommand() = commandTree("gamestart") {
         val border = world.worldBorder
         gameStarted = true
 
-        // 30 Minuten Safe-Phase
-        world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
-        world.setGameRule(GameRule.PVP, false)
-        world.setGameRule(GameRule.FALL_DAMAGE, false)
 
         border.center = player.location
         border.size = 5000.0
         server.sendText {
             appendPrefix()
             info("Spiel gestartet! 30 Minuten Safe-Phase ohne PvP und Monster-Spawning.")
+        }
+
+
+        forEachPlayer { player ->
+            player.addPotionEffect(
+                PotionEffect(
+                    PotionEffectType.NIGHT_VISION,
+                    255,
+                    255)
+            )
         }
 
         world.players.forEach {
@@ -47,12 +56,19 @@ fun startGameCommand() = commandTree("gamestart") {
             it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
         }
 
-        // Nach 30 Minuten PvP und Mob\-Spawning wieder aktivieren und Border-Shrink starten
+
         object : BukkitRunnable() {
             override fun run() {
 
                 world.setGameRule(GameRule.DO_MOB_SPAWNING, true)
                 world.setGameRule(GameRule.PVP, true)
+                world.setGameRule(GameRule.FALL_DAMAGE, true)
+                world.setGameRule(GameRule.DO_WARDEN_SPAWNING, true)
+
+                forEachPlayer { player ->
+                    player.removePotionEffect(PotionEffectType.NIGHT_VISION)
+                }
+
 
                 server.sendText {
                     appendPrefix()
@@ -65,7 +81,7 @@ fun startGameCommand() = commandTree("gamestart") {
 
                 startBorderShrink(world)
             }
-        }.runTaskLater(plugin, 30 * 60 * 20L) // 30 Minuten
+        }.runTaskLater(plugin, 30 * 60 * 20L)
     }
 }
 
@@ -128,7 +144,7 @@ fun startBorderShrink(world: World) {
 
     }.runTaskTimer(
         plugin,
-        10 * 60 * 20L, // erste Ausführung nach 10 Minuten
-        10 * 60 * 20L  // Wiederholung alle 10 Minuten
+        10 * 60 * 20L,
+        10 * 60 * 20L
     )
 }
