@@ -8,6 +8,8 @@ import de.hiorcraft.nex.nexWarzone.listener.PlayerDeath
 import de.hiorcraft.nex.nexWarzone.listener.WhitelistListener
 import de.hiorcraft.nex.nexWarzone.util.BorderDistanceTask
 import org.bukkit.Bukkit
+import org.bukkit.GameRule
+import org.bukkit.World
 import org.bukkit.plugin.java.JavaPlugin
 
 val plugin get() = JavaPlugin.getPlugin(PaperMain::class.java)
@@ -26,6 +28,14 @@ class PaperMain : SuspendingJavaPlugin() {
 
         BorderDistanceTask().runTaskTimer(plugin, 0L, 20L)
         CommandManager.registerAll()
+
+
+        val world: World? = Bukkit.getWorld("world")
+        world?.setGameRule(GameRule.FALL_DAMAGE, false)
+        world?.setGameRule(GameRule.SPAWN_MONSTERS, false)
+        world?.setGameRule(GameRule.PVP, false)
+        world?.setGameRule(GameRule.DO_WARDEN_SPAWNING, false)
+        world?.setGameRule(GameRule.LOCATOR_BAR, false)
 
         logger.info("nex-Warzone has started.")
     }
