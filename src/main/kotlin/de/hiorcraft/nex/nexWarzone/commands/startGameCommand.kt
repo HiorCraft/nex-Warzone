@@ -2,6 +2,7 @@ package de.hiorcraft.nex.nexWarzone.commands
 
 import de.hiorcraft.nex.nexWarzone.util.PermissionRegistry
 import de.hiorcraft.nex.nexWarzone.plugin
+import de.hiorcraft.nex.nexWarzone.util.ActionBarTask
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
@@ -27,6 +28,7 @@ fun startGameCommand() = commandTree("gamestart") {
         val border = world.worldBorder
         gameStarted = true
 
+        ActionBarTask(plugin).startGameTimers()
 
         border.center = player.location
         border.size = 5000.0
@@ -40,8 +42,9 @@ fun startGameCommand() = commandTree("gamestart") {
             player.addPotionEffect(
                 PotionEffect(
                     PotionEffectType.NIGHT_VISION,
-                    255,
-                    255)
+                    30 * 60 * 20,
+                    255),
+                    true
             )
         }
 

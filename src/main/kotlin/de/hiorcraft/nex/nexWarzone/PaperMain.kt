@@ -6,7 +6,6 @@ import de.hiorcraft.nex.nexWarzone.listener.GameMoveListener
 import de.hiorcraft.nex.nexWarzone.util.CommandManager
 import de.hiorcraft.nex.nexWarzone.listener.PlayerDeath
 import de.hiorcraft.nex.nexWarzone.listener.WhitelistListener
-import de.hiorcraft.nex.nexWarzone.util.BorderDistanceTask
 import org.bukkit.Bukkit
 import org.bukkit.GameRule
 import org.bukkit.World
@@ -28,7 +27,6 @@ class PaperMain : SuspendingJavaPlugin() {
 
         logger.info("Enabled Listeners.")
 
-        BorderDistanceTask().runTaskTimer(plugin, 0L, 20L)
         CommandManager.registerAll()
 
 
