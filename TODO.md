@@ -1,0 +1,4 @@
+- [ ] Border Event in now Class
+- [ ] Config.yml Creation
+- [ ] Add Stop Command for Event
+- [ ] Add Permissions for Commands
