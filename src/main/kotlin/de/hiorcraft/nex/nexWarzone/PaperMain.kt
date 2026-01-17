@@ -29,6 +29,8 @@ class PaperMain : SuspendingJavaPlugin() {
 
         CommandManager.registerAll()
 
+        logger.info("Enabled Commands.")
+
 
         val world: World? = Bukkit.getWorld("world")
         world?.setGameRule(GameRule.FALL_DAMAGE, false)
@@ -36,6 +38,7 @@ class PaperMain : SuspendingJavaPlugin() {
         world?.setGameRule(GameRule.PVP, false)
         world?.setGameRule(GameRule.DO_WARDEN_SPAWNING, false)
         world?.setGameRule(GameRule.LOCATOR_BAR, false)
+        world?.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)
 
         logger.info("Set GameRules for Event.")
 
