@@ -2,6 +2,7 @@ package de.hiorcraft.nex.nexWarzone
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
 import de.hiorcraft.nex.nexWarzone.listener.EventListener
+import de.hiorcraft.nex.nexWarzone.listener.GameBlockListener
 import de.hiorcraft.nex.nexWarzone.listener.GameMoveListener
 import de.hiorcraft.nex.nexWarzone.util.CommandManager
 import de.hiorcraft.nex.nexWarzone.listener.PlayerDeath
@@ -24,6 +25,7 @@ class PaperMain : SuspendingJavaPlugin() {
         manager.registerEvents(WhitelistListener(), this)
         manager.registerEvents(GameMoveListener(), this)
         manager.registerEvents(EventListener(), this)
+        manager.registerEvents(GameBlockListener(), this)
 
         logger.info("Enabled Listeners.")
 
