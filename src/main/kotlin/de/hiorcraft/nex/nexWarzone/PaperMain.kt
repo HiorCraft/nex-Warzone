@@ -4,6 +4,7 @@ import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
 import de.hiorcraft.nex.nexWarzone.listener.EventListener
 import de.hiorcraft.nex.nexWarzone.listener.GameBlockListener
 import de.hiorcraft.nex.nexWarzone.listener.GameMoveListener
+import de.hiorcraft.nex.nexWarzone.listener.GamePortalListener
 import de.hiorcraft.nex.nexWarzone.util.CommandManager
 import de.hiorcraft.nex.nexWarzone.listener.PlayerDeath
 import de.hiorcraft.nex.nexWarzone.listener.WhitelistListener
@@ -26,6 +27,8 @@ class PaperMain : SuspendingJavaPlugin() {
         manager.registerEvents(GameMoveListener(), this)
         manager.registerEvents(EventListener(), this)
         manager.registerEvents(GameBlockListener(), this)
+        manager.registerEvents(GamePortalListener(), this)
+
 
         logger.info("Enabled Listeners.")
 
@@ -35,6 +38,7 @@ class PaperMain : SuspendingJavaPlugin() {
 
 
         val world: World? = Bukkit.getWorld("world")
+
         world?.setGameRule(GameRule.FALL_DAMAGE, false)
         world?.setGameRule(GameRule.SPAWN_MONSTERS, false)
         world?.setGameRule(GameRule.PVP, false)
